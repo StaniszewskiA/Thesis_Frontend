@@ -1,0 +1,15 @@
+<div>
+    <h1>Welcome to My Angular App!</h1>
+    <p>This is the main page of my application.</p>
+    
+    <div class="dropzone" id="dropzone1">
+      <p>Drop an image here to upload.</p>
+    </div>
+    <img *ngIf="uploadedImage1" [src]="uploadedImage1" class="uploaded-image">
+    
+    <div class="dropzone" id="dropzone2">
+      <p>Drop another image here to upload.</p>
+    </div>
+    <img *ngIf="uploadedImage2" [src]="uploadedImage2" class="uploaded-image">
+    <button (click)="compareImages()" class="compare-button">Compare Images</button>
+</div>
