@@ -54,6 +54,7 @@ export class MainPageComponent {
   
 
   compareImages(): void {
+    console.log("Test");
     if (this.uploadedImage1 && this.uploadedImage2) {
       this.apiService.compareImages(this.uploadedImage1 as string, this.uploadedImage2 as string)
         .subscribe(
