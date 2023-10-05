@@ -10,7 +10,7 @@ export class MainPageComponent {
   uploadedImage1: string | ArrayBuffer | null = null;
   uploadedImage2: string | ArrayBuffer | null = null;
   similarityScore: number | null = null; // Initialize as null
-
+  resultImageUrl: string | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -52,21 +52,21 @@ export class MainPageComponent {
     reader.readAsDataURL(file);
   }
   
-
   compareImages(): void {
-    console.log("Test");
-    if (this.uploadedImage1 && this.uploadedImage2) {
-      this.apiService.compareImages(this.uploadedImage1 as string, this.uploadedImage2 as string)
+    if (this.uploadedImage1) {
+      this.apiService.compareImages(this.uploadedImage1 as string)
         .subscribe(
-          response => {
-            // Handle the comparison result from the API response
-            const similarityScore = response.similarity_score;
-            console.log('Comparison result:', similarityScore);
+          (response: { best_match_url: string, similarity_score: number }) => {
+            console.log('Response from server:', response)
+            this.resultImageUrl = response.best_match_url;
+            this.similarityScore = response.similarity_score;
+            console.log('Comparison result image URL:', this.resultImageUrl);
+            console.log('Similarity score:', this.similarityScore);
           },
           error => {
             console.error('Error comparing images:', error);
           }
         );
-      }
     }
   }
+}

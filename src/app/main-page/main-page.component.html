@@ -2,19 +2,21 @@
   <h1>Goetla8.py Test</h1>
   
   <div class="dropzone-container">
-      <div class="dropzone" id="dropzone1">
-          <p>Drop an image here to upload.</p>
-          <img *ngIf="uploadedImage1" [src]="uploadedImage1" class="uploaded-image">
-      </div>
-      <div class="dropzone" id="dropzone2">
-          <p>Drop another image here to upload.</p>
-          <img *ngIf="uploadedImage2" [src]="uploadedImage2" class="uploaded-image">
-      </div>
+    <div class="dropzone" id="dropzone1">
+      <p>Drop an image here to upload.</p>
+      <img *ngIf="uploadedImage1" [src]="uploadedImage1" class="uploaded-image">
+    </div>
   </div>
   
   <button (click)="compareImages()" class="compare-button">Compare Images</button>
   
   <div class="comparison-score-box">
-    <p class="comparison-score">Comparison Score: {{ similarityScore !== null ? similarityScore : 'N/A' }}</p>
+    <p class="comparison-score">Comparison Score: {{ similarityScore !== null ? (similarityScore * 100).toFixed(2) + '%' : 'N/A' }}</p>
+  </div>
+  
+  <!-- Display the result image -->
+  <div class="result-image-box" *ngIf="resultImageUrl">
+    <p class="result-image-text">Result Image:</p>
+    <img [src]="resultImageUrl" class="result-image">
   </div>
 </div>
