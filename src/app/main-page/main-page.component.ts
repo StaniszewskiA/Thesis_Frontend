@@ -8,9 +8,9 @@ import { ApiService } from './api.service';
 })
 export class MainPageComponent {
   uploadedImage1: string | ArrayBuffer | null = null;
-  uploadedImage2: string | ArrayBuffer | null = null;
-  similarityScore: number | null = null; // Initialize as null
+  //similarityScore: number | null = null; // Initialize as null
   resultImageUrl: string | null = null;
+  resultImageBlob: Blob | null = null;
 
   constructor(private apiService: ApiService) {}
 
@@ -45,8 +45,6 @@ export class MainPageComponent {
       const imageData = event.target?.result; // This will be the base64 data URI
       if (index === 0) {
         this.uploadedImage1 = imageData as string; // Ensure imageData is a string
-      } else if (index === 1) {
-        this.uploadedImage2 = imageData as string; // Ensure imageData is a string
       }
     };
     reader.readAsDataURL(file);
@@ -54,19 +52,25 @@ export class MainPageComponent {
   
   compareImages(): void {
     if (this.uploadedImage1) {
-      this.apiService.compareImages(this.uploadedImage1 as string)
+      this.apiService.compareImage(this.uploadedImage1 as string)
         .subscribe(
-          (response: { best_match_url: string, similarity_score: number }) => {
-            console.log('Response from server:', response)
-            this.resultImageUrl = response.best_match_url;
-            this.similarityScore = response.similarity_score;
-            console.log('Comparison result image URL:', this.resultImageUrl);
-            console.log('Similarity score:', this.similarityScore);
+          (response: Blob) => {
+            console.log("Response from server:", response);
+            this.resultImageBlob = response;
+            console.log("Comparison result image:", this.resultImageBlob);
           },
           error => {
-            console.error('Error comparing images:', error);
+            console.error("Error comparing image:", error);
           }
-        );
+        )
+    }
+  }
+
+  resultImageBlobUrl(): string | null {
+    if (this.resultImageBlob) {
+      return URL.createObjectURL(this.resultImageBlob);
+    } else {
+      return null;
     }
   }
 }

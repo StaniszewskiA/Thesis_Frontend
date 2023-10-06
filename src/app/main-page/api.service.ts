@@ -16,14 +16,9 @@ export class ApiService {
       .pipe(map(response => response.imageUrl))
   }
 
-  compareImages(image1Url: string): Observable<{ best_match_url: string, similarity_score: number }> {
+  compareImage(imageUrl: string): Observable<Blob> {
     const endpoint = `${this.apiUrl}/api/compare_images/`;
-    const payload = { image1_url: image1Url };
-    return this.http.post<{ best_match_url: string, similarity_score: number }>(endpoint, payload, { responseType: 'json' }).pipe(
-      map(response => ({
-        best_match_url: response.best_match_url,
-        similarity_score: response.similarity_score
-      }))
-    );
+    const payload = { image1_url: imageUrl };
+    return this.http.post(endpoint, payload, { responseType: 'blob' });
   }
 }
