@@ -16,9 +16,9 @@ export class ApiService {
       .pipe(map(response => response.imageUrl))
   }
 
-  compareImage(imageUrl: string): Observable<Blob> {
+  compareImage(imageUrl: string): Observable<any> {
     const endpoint = `${this.apiUrl}/api/compare_images/`;
     const payload = { image1_url: imageUrl };
-    return this.http.post(endpoint, payload, { responseType: 'blob' });
+    return this.http.post(endpoint, payload);
   }
 }
