@@ -11,8 +11,11 @@ export class MainPageComponent {
   //similarityScore: number | null = null; // Initialize as null
   resultImageUrl: string | null = null;
   resultImageBlob: Blob | null = null;
+  resultImageBlobs: Blob[] | null = null;
+  currentResultIndex: number = 0;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService) {}
 
   ngOnInit(): void {
     const dropzone1 = document.getElementById('dropzone1');
@@ -49,26 +52,30 @@ export class MainPageComponent {
     };
     reader.readAsDataURL(file);
   }
-  
+
   compareImages(): void {
     if (this.uploadedImage1) {
       this.apiService.compareImage(this.uploadedImage1 as string)
         .subscribe(
-          (response: Blob) => {
+          (response: Blob[]) => {
             console.log("Response from server:", response);
-            this.resultImageBlob = response;
-            console.log("Comparison result image:", this.resultImageBlob);
           },
           error => {
-            console.error("Error comparing image:", error);
+            console.error("Error comparing image", error);
           }
         )
     }
   }
+  
+  nextResultImage(): void {
+    if (this.resultImageBlobs && this.resultImageBlobs.length > 0) {
+      this.currentResultIndex = (this.currentResultIndex + 1) % this.resultImageBlobs.length;
+    }
+  }  
 
   resultImageBlobUrl(): string | null {
-    if (this.resultImageBlob) {
-      return URL.createObjectURL(this.resultImageBlob);
+    if (this.resultImageBlobs && this.resultImageBlobs.length > 0) {
+      return URL.createObjectURL(this.resultImageBlobs[this.currentResultIndex])
     } else {
       return null;
     }
