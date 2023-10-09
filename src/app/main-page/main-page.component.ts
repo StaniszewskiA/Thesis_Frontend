@@ -54,11 +54,10 @@ export class MainPageComponent {
     if (this.uploadedImage1) {
       this.apiService.compareImage(this.uploadedImage1 as string)
         .subscribe(
-          (response: any) => { // Use 'any' as the response type if you're not sure of its structure
+          (response: Blob) => {
             console.log("Response from server:", response);
-            // Assuming the response contains an 'imageUrl' property, you can set it like this:
-            this.resultImageUrl = response.imageUrl;
-            console.log("Comparison result image URL:", this.resultImageUrl);
+            this.resultImageBlob = response;
+            console.log("Comparison result image:", this.resultImageBlob);
           },
           error => {
             console.error("Error comparing image:", error);
