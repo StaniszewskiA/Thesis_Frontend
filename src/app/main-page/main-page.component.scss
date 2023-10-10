@@ -1,7 +1,7 @@
 /* main-page.component.scss */
 $background-color: #f3f3df;
 
-html, body{
+html, body {
     width: 80%;
     height: 80%;
 }
@@ -24,7 +24,7 @@ h1 {
 p {
     font-size: 16px;
     margin-bottom: 20px;
-    }
+}
 
 .dropzone-container {
     display: flex;
@@ -92,14 +92,23 @@ p {
     margin: 0;
 }
 
-.result-image-box {
+/* Styling for all display containers */
+.display-container {
     width: 224px;
     height: 224px;
     overflow: hidden;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
-.result-image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.display-container {
+    display: inline-block; /* Display each container as inline-block */
+    margin-right: 20px; /* Add some spacing between containers */
 }

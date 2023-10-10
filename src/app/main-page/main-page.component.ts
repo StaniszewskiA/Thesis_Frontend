@@ -11,10 +11,7 @@ import { ImageComparisonResponse } from '../models/response.model'
 export class MainPageComponent {
   uploadedImage1: string | ArrayBuffer | null = null;
   //similarityScore: number | null = null; // Initialize as null
-  resultImageUrl: string | null = null;
-  resultImageBlob: Blob | null = null;
-  resultImageBlobs: Blob[] | null = null;
-  currentResultIndex: number = 0;
+  resultImages: string[] = [];
 
   constructor(
     private apiService: ApiService) {}
@@ -60,38 +57,22 @@ export class MainPageComponent {
       this.apiService.compareImage(this.uploadedImage1 as string)
         .subscribe(
           (response: ImageComparisonResponse) => {
-            console.log("Response from server:", response.images[0]);
-            //Decode the base64 image data
-            const base64Image = response.images[0];
-            const decodedImage = atob(base64Image);
-
-            //Create a blob from decoded data
-            const byteArray = new Uint8Array(decodedImage.length);
-            for (let i = 0; i < decodedImage.length; i++) {
-              byteArray[i] = decodedImage.charCodeAt(i);
+            this.resultImages = [];
+            
+            for (const base64Image of response.images) {
+              const decodedImage = atob(base64Image);
+              const byteArray = new Uint8Array(decodedImage.length);
+              for (let i = 0; i < decodedImage.length; i++) {
+                byteArray[i] = decodedImage.charCodeAt(i);
+              }
+              const blob = new Blob([byteArray], { type: 'image/jpeg' });
+              this.resultImages.push(URL.createObjectURL(blob));
             }
-            const blob = new Blob([byteArray], { type: 'image/jpeg' });
-
-            this.resultImageUrl = URL.createObjectURL(blob);
           },
           error => {
             console.error("Error comparing image", error);
           }
         )
-    }
-  }
-  
-  nextResultImage(): void {
-    if (this.resultImageBlobs && this.resultImageBlobs.length > 0) {
-      this.currentResultIndex = (this.currentResultIndex + 1) % this.resultImageBlobs.length;
-    }
-  }  
-
-  resultImageBlobUrl(): string | null {
-    if (this.resultImageBlobs && this.resultImageBlobs.length > 0) {
-      return URL.createObjectURL(this.resultImageBlobs[this.currentResultIndex])
-    } else {
-      return null;
     }
   }
 }
