@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { ImageComparisonResponse } from '../models/response.model'
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,9 @@ export class ApiService {
       .pipe(map(response => response.imageUrl))
   }
 
-  compareImage(imageUrl: string): Observable<Blob[]> {
+  compareImage(imageUrl: string): Observable<ImageComparisonResponse> {
     const endpoint = `${this.apiUrl}/api/compare_images/`;
     const payload = { image1_url: imageUrl };
-    return this.http.post<Blob[]>(endpoint, payload);
+    return this.http.post<ImageComparisonResponse>(endpoint, payload);
   }
 }

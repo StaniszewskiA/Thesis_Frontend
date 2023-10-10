@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
+import { ImageComparisonResponse } from '../models/response.model'
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss']
 })
+
 export class MainPageComponent {
   uploadedImage1: string | ArrayBuffer | null = null;
   //similarityScore: number | null = null; // Initialize as null
@@ -57,8 +59,20 @@ export class MainPageComponent {
     if (this.uploadedImage1) {
       this.apiService.compareImage(this.uploadedImage1 as string)
         .subscribe(
-          (response: Blob[]) => {
-            console.log("Response from server:", response);
+          (response: ImageComparisonResponse) => {
+            console.log("Response from server:", response.images[0]);
+            //Decode the base64 image data
+            const base64Image = response.images[0];
+            const decodedImage = atob(base64Image);
+
+            //Create a blob from decoded data
+            const byteArray = new Uint8Array(decodedImage.length);
+            for (let i = 0; i < decodedImage.length; i++) {
+              byteArray[i] = decodedImage.charCodeAt(i);
+            }
+            const blob = new Blob([byteArray], { type: 'image/jpeg' });
+
+            this.resultImageUrl = URL.createObjectURL(blob);
           },
           error => {
             console.error("Error comparing image", error);

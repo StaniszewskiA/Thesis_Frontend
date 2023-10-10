@@ -11,8 +11,8 @@
   <button (click)="compareImages()" class="compare-button">Compare Images</button>
   
   <!-- Display the result image -->
-  <div class="result-image-box" *ngIf="resultImageBlob">
+  <div class="result-image-box" *ngIf="resultImageUrl">
     <p class="result-image-text">Our top pick:</p>
-    <img [src]="resultImageBlobUrl" class="result-image">
+    <img [src]="resultImageUrl" class="result-image">
   </div>
 </div>
