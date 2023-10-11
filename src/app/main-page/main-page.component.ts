@@ -9,12 +9,15 @@ import { ImageComparisonResponse } from '../models/response.model'
 })
 
 export class MainPageComponent {
-  uploadedImage1: string | ArrayBuffer | null = null;
+  uploadedImage: string | ArrayBuffer | null = null;
+  engine: string | null = "vgg16";
+  top_n: number = 1;
   //similarityScore: number | null = null; // Initialize as null
   resultImages: string[] = [];
 
   constructor(
-    private apiService: ApiService) {}
+    private apiService: ApiService,
+    ) {}
 
   ngOnInit(): void {
     const dropzone1 = document.getElementById('dropzone1');
@@ -46,15 +49,15 @@ export class MainPageComponent {
     reader.onload = (event) => {
       const imageData = event.target?.result; // This will be the base64 data URI
       if (index === 0) {
-        this.uploadedImage1 = imageData as string; // Ensure imageData is a string
+        this.uploadedImage = imageData as string; // Ensure imageData is a string
       }
     };
     reader.readAsDataURL(file);
   }
 
   compareImages(): void {
-    if (this.uploadedImage1) {
-      this.apiService.compareImage(this.uploadedImage1 as string)
+    if (this.uploadedImage) {
+      this.apiService.compareImage(this.uploadedImage as string, this.engine as string, this.top_n as number)
         .subscribe(
           (response: ImageComparisonResponse) => {
             this.resultImages = [];
