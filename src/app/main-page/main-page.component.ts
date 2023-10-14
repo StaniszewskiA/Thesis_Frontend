@@ -10,8 +10,8 @@ import { ImageComparisonResponse } from '../models/response.model'
 
 export class MainPageComponent {
   uploadedImage: string | ArrayBuffer | null = null;
-  engine: string | null = "vgg16";
-  top_n: number = 1;
+  engine: string | null = "vgg16torch";
+  top_n: number = 2;
   //similarityScore: number | null = null; // Initialize as null
   resultImages: string[] = [];
 
@@ -59,22 +59,10 @@ export class MainPageComponent {
     if (this.uploadedImage) {
       this.apiService.compareImage(this.uploadedImage as string, this.engine as string, this.top_n as number)
         .subscribe(
-          (response: ImageComparisonResponse) => {
-            this.resultImages = [];
-            
-            for (const base64Image of response.images) {
-              const decodedImage = atob(base64Image);
-              const byteArray = new Uint8Array(decodedImage.length);
-              for (let i = 0; i < decodedImage.length; i++) {
-                byteArray[i] = decodedImage.charCodeAt(i);
-              }
-              const blob = new Blob([byteArray], { type: 'image/jpeg' });
-              this.resultImages.push(URL.createObjectURL(blob));
-            }
-          },
-          error => {
-            console.error("Error comparing image", error);
-          }
+          (response => {
+            console.log("Response from compareImage:", response);
+            this.resultImages.push(URL.createObjectURL(response));
+          })
         )
     }
   }

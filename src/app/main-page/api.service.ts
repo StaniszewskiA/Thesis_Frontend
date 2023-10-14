@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, map, tap } from 'rxjs';
 import { ImageComparisonResponse } from '../models/response.model'
 
 @Injectable({
@@ -17,13 +17,20 @@ export class ApiService {
       .pipe(map(response => response.imageUrl))
   }
 
-  compareImage(imageUrl: string, engine: string, top_n: number): Observable<ImageComparisonResponse> {
+  compareImage(imageUrl: string, engine: string, top_n: number): Observable<Blob> {
     const endpoint = `${this.apiUrl}/api/compare_images/`;
     const payload = { 
       image_url: imageUrl, 
       engine: engine,
       top_n: top_n
     };
-    return this.http.post<ImageComparisonResponse>(endpoint, payload);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'ResponseType': 'blob' 
+    });
+
+    return this.http.post(endpoint, payload, { headers, responseType: 'blob' });
   }
 }
