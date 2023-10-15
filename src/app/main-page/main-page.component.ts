@@ -11,7 +11,7 @@ import { ImageComparisonResponse } from '../models/response.model'
 export class MainPageComponent {
   uploadedImage: string | ArrayBuffer | null = null;
   engine: string | null = "vgg16torch";
-  top_n: number = 2;
+  top_n: number = 1;
   //similarityScore: number | null = null; // Initialize as null
   resultImages: string[] = [];
 
