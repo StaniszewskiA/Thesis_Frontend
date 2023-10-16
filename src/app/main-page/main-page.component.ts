@@ -10,7 +10,7 @@ import { ImageComparisonResponse } from '../models/response.model'
 
 export class MainPageComponent {
   uploadedImage: string | ArrayBuffer | null = null;
-  engine: string | null = "vgg16torch";
+  engine: string | null = "biometric_engine";
   top_n: number = 1;
   //similarityScore: number | null = null; // Initialize as null
   resultImages: string[] = [];
@@ -61,6 +61,9 @@ export class MainPageComponent {
         .subscribe(
           (response => {
             console.log("Response from compareImage:", response);
+            if (this.resultImages) {
+              this.resultImages.pop();
+            }
             this.resultImages.push(URL.createObjectURL(response));
           })
         )
