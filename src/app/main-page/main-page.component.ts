@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api.service';
-import { ImageComparisonResponse } from '../models/response.model'
 
 @Component({
   selector: 'app-main-page',
@@ -10,8 +9,8 @@ import { ImageComparisonResponse } from '../models/response.model'
 
 export class MainPageComponent {
   uploadedImage: string | ArrayBuffer | null = null;
-  engine: string | null = "biometric_engine";
-  top_n: number = 1;
+  engine: string | null = "hash_codes";
+  top_n: number = 3;
   //similarityScore: number | null = null; // Initialize as null
   resultImages: string[] = [];
 
@@ -21,9 +20,8 @@ export class MainPageComponent {
 
   ngOnInit(): void {
     const dropzone1 = document.getElementById('dropzone1');
-    const dropzone2 = document.getElementById('dropzone2');
 
-    [dropzone1, dropzone2].forEach((dropzone, index) => {
+    [dropzone1].forEach((dropzone, index) => {
       dropzone?.addEventListener('dragover', (e) => {
         e.preventDefault();
         dropzone.classList.add('dragover');
@@ -61,12 +59,26 @@ export class MainPageComponent {
         .subscribe(
           (response => {
             console.log("Response from compareImage:", response);
-            if (this.resultImages) {
-              this.resultImages.pop();
-            }
-            this.resultImages.push(URL.createObjectURL(response));
+            this.handleResponse(response);
+          }),
+          (error => {
+            console.error("Error in compareImage:", error);
           })
-        )
+        );
     }
+  }
+
+  private handleResponse(response: any): void {
+    if (this.resultImages.length > 0) {
+      this.resultImages.pop();
+    }
+    
+    response.matches_images.forEach((imageData: string) => {
+      const img = new Image();
+      img.onload = () => {
+        this.resultImages.push(img.src)
+      };
+      img.src = `data:image/jpeg;base64,${imageData}`;
+    }); 
   }
 }
