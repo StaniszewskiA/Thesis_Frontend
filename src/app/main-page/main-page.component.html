@@ -1,17 +1,26 @@
 <div class="main-container">
   <h1>Thesis.py Test</h1>
-  
+ 
   <div class="dropzone-container">
-    <div class="dropzone" id="dropzone1">
-      <p>Drop an image here to upload.</p>
-      <img *ngIf="uploadedImage" [src]="uploadedImage" class="uploaded-image">
+     <div class="dropzone" id="dropzone1">
+       <p>Drop an image here to upload.</p>
+       <img *ngIf="uploadedImage" [src]="uploadedImage" class="uploaded-image">
+     </div>
+  </div>
+ 
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="openDropdownMenu()">
+      Compare Images
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" #dropdownMenu>
+      <a class="dropdown-item" *ngFor="let engine of engineOptions" (click)="selectEngine(engine); closeDropdownMenu(); compareImages()">{{engine}}</a>
     </div>
   </div>
-  
-  <button (click)="compareImages()" class="compare-button">Search for an image</button>
-  
-  <!-- Display the result image -->
+ 
+  <!-- Display the result image 
   <div class="display-container" *ngFor="let imageUrl of resultImages; let i = index">
-    <img [src]="imageUrl" [alt]="'Result image ' + (i + i)" class="result-image">
+     <img [src]="imageUrl" [alt]="'Result image ' + (i + i)" class="result-image">
   </div>
-</div>
+  -->
+  <app-image-carousel [resultImages]="resultImages"></app-image-carousel>
+ </div>
