@@ -4,31 +4,44 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, S
   selector: 'app-image-carousel',
   templateUrl: './image-carousel.component.html',
   styleUrls: ['./image-carousel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageCarouselComponent implements OnInit {
 
-  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
+  slides: any[] = []
   @Input() resultImages: string[] = [];
   constructor(
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    this.slides[0] = {
-      src: "../../assets/imgs/dummy-image.jpg",
-    };
-    
-    this.slides[1] = {
-      src: "../../assets/imgs/sddefault.jpg",
-    };
+    this.loadCarouselData();
+  }
 
-    this.slides[2] = {
-      src: "../../assets/imgs/dummy-image.jpg",
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["resultImages"] && this.resultImages.length > 0) {
+      this.loadCarouselData();
+      this.cdr.detectChanges(); // Optional: Trigger change detection
     }
   }
 
-  ngOnChange(changes: SimpleChanges): void {
-    console.log("DUPSKO 122");
+  loadCarouselData(): void {
+    this.slides = this.resultImages.map((imageUrl, index) => ({
+      src: imageUrl,
+      title: `Image ${index + 1}`,
+    }));
+  }
+
+  changeCarouselData(): void {
+    this.printImages();
+
+    this.slides = [
+      { src: "../../assets/imgs/sddefault.jpg", title: 'Angular', subtitle: 'A TypeScript-based web application framework' },
+      { src: "../../assets/imgs/dummy-image.jpg", title: 'React', subtitle: 'A JavaScript library for building user interfaces' },
+      { src: "../../assets/imgs/sddefault.jpg", title: 'Vue', subtitle: 'A progressive JavaScript framework for building user interfaces' }
+    ];
+    this.slides = [...this.slides];
+    this.cdr.detectChanges();
   }
 
   public printImages(): void {
@@ -36,15 +49,5 @@ export class ImageCarouselComponent implements OnInit {
     console.log(this.resultImages[0]);
     console.log(this.resultImages[1]);
     console.log(this.resultImages[2]);
-  }
-
-  public updateSlides(data: any): void {
-    data.matches_images.forEach((imageData: string) => {
-      const img = new Image();
-      img.onload = () => {
-        this.resultImages[0] = img.src;
-      };
-      img.src = `data:image/jpeg;base64,${imageData}`;
-    });
   }
 }

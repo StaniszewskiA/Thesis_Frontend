@@ -48,7 +48,7 @@ export class MainPageComponent {
 
     selectEngine(engine: string): void {
     this.selectedEngine = engine;
-    console.log(this.selectedEngine)
+
   }
 
 
@@ -94,7 +94,7 @@ export class MainPageComponent {
     this.apiService.compareImage(this.uploadedImage as string, this.selectedEngine as string, this.top_n as number)
       .subscribe(
         (response => {
-          console.log("Response from compareImage:", response);
+          
           this.handleResponse(response);
         }),
         (error => {
@@ -122,8 +122,7 @@ private handleResponse(response: any): void {
     this.imageCarouselComponent.printImages();
   }
 
-  async triggerSlideUpdate(): Promise<void> {
-    await new Promise(resolve => setTimeout(resolve, 30000));
-    this.imageCarouselComponent.updateSlides(this.resultImages);
+  triggerChangeCarouselData(): void {
+    this.imageCarouselComponent.changeCarouselData();
   }
 }
