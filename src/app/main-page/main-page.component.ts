@@ -28,7 +28,7 @@ export class MainPageComponent {
  constructor(
     private apiService: ApiService,
     private render: Renderer2,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
     ) {}
 
 
@@ -116,5 +116,9 @@ private handleResponse(response: any): void {
     };
     img.src = `data:image/jpeg;base64,${imageData}`;
   }); 
-}
+  }
+
+  triggerImagePrint(): void {
+    this.imageCarouselComponent.printImages();
+  }
 }

@@ -1,13 +1,14 @@
-import { ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-image-carousel',
   templateUrl: './image-carousel.component.html',
-  styleUrls: ['./image-carousel.component.scss']
+  styleUrls: ['./image-carousel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageCarouselComponent implements OnInit {
 
-  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
+  slides: any[] = [];
   @Input() resultImages: string[] = [];
   constructor(
     private cdr: ChangeDetectorRef
@@ -29,7 +30,7 @@ export class ImageCarouselComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log("Registered a change");
-    if ('resultImages' in changes) {
+    if ('resultImages' in changes && this.resultImages.length > 0) {
       this.updateSlides();
       this.cdr.detectChanges();
     }
@@ -44,5 +45,10 @@ export class ImageCarouselComponent implements OnInit {
         subtitle: `Subtitle ${index + 1}`
       };
     });
+  }
+
+  public printImages(): void {
+    console.log("Działa");
+    console.log(this.resultImages);
   }
 }
