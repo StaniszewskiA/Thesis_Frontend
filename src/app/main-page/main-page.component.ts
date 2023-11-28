@@ -105,7 +105,7 @@ export class MainPageComponent {
 }
 
 private handleResponse(response: any): void {
-  if (this.resultImages.length > 0) {
+  while (this.resultImages.length > 0) {
     this.resultImages.pop();
   }
   
@@ -120,5 +120,10 @@ private handleResponse(response: any): void {
 
   triggerImagePrint(): void {
     this.imageCarouselComponent.printImages();
+  }
+
+  async triggerSlideUpdate(): Promise<void> {
+    await new Promise(resolve => setTimeout(resolve, 30000));
+    this.imageCarouselComponent.updateSlides(this.resultImages);
   }
 }

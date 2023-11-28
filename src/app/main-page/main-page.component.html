@@ -13,14 +13,14 @@
       Compare Images
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" #dropdownMenu>
-      <a class="dropdown-item" *ngFor="let engine of engineOptions" (click)="selectEngine(engine); closeDropdownMenu(); compareImages(); triggerImagePrint()">{{engine}}</a>
+      <a class="dropdown-item" *ngFor="let engine of engineOptions" (click)="selectEngine(engine); closeDropdownMenu(); compareImages(); triggerImagePrint(); triggerSlideUpdate()">{{engine}}</a>
     </div>
   </div>
  
-  <!-- Display the result image 
+ 
   <div class="display-container" *ngFor="let imageUrl of resultImages; let i = index">
      <img [src]="imageUrl" [alt]="'Result image ' + (i + i)" class="result-image">
   </div>
-  -->
+
   <app-image-carousel [resultImages]="resultImages"></app-image-carousel>
  </div>
