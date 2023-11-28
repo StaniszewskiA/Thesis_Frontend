@@ -24,11 +24,4 @@ export class ImageCarouselComponent implements OnInit {
       src: this.resultImages[2],
     }
   }
-
-  printResultImages(): void {
-    setTimeout(() => {
-      console.log("Działa");
-      console.log(this.resultImages);
-    }, 30000);
-  }
 }

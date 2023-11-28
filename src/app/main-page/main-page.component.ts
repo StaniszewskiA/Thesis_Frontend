@@ -51,9 +51,6 @@ export class MainPageComponent {
     console.log(this.selectedEngine)
   }
 
-  callPrintResultImages(): void {
-    this.imageCarouselComponent.printResultImages();
-  }
 
  ngOnInit(): void {
     const dropzone1 = document.getElementById('dropzone1');
