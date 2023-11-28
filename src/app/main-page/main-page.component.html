@@ -13,7 +13,7 @@
       Compare Images
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" #dropdownMenu>
-      <a class="dropdown-item" *ngFor="let engine of engineOptions" (click)="selectEngine(engine); closeDropdownMenu(); compareImages()">{{engine}}</a>
+      <a class="dropdown-item" *ngFor="let engine of engineOptions" (click)="selectEngine(engine); closeDropdownMenu(); compareImages(); callPrintResultImages()">{{engine}}</a>
     </div>
   </div>
  

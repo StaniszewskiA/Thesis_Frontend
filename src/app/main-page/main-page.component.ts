@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, Renderer2 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { ApiService } from './api.service';
+import { ImageCarouselComponent } from './../image-carousel/image-carousel.component';
 
 @Component({
  selector: 'app-main-page',
@@ -33,6 +33,7 @@ export class MainPageComponent {
 
 
   @ViewChild('dropdownMenu') dropdownMenu: ElementRef | undefined;
+  @ViewChild(ImageCarouselComponent) imageCarouselComponent!: ImageCarouselComponent;
 
   // Method to open the dropdown menu
   openDropdownMenu(): void {
@@ -48,6 +49,10 @@ export class MainPageComponent {
     selectEngine(engine: string): void {
     this.selectedEngine = engine;
     console.log(this.selectedEngine)
+  }
+
+  callPrintResultImages(): void {
+    this.imageCarouselComponent.printResultImages();
   }
 
  ngOnInit(): void {
