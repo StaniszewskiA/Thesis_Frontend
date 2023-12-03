@@ -11,19 +11,17 @@ import { ImageCarouselComponent } from './../image-carousel/image-carousel.compo
 export class MainPageComponent {
  uploadedImage: string | ArrayBuffer | null = null;
  engineOptions: string[] = [
-    "VGG16_TF",
-    "V6_TORCH",
-    "BIOMETRIC_ENGINE",
-    "HASH_CODES",
-    "CNNH",
-    "DNNH"
+    "vgg16tf",
+    "vgg16torch",
+    "jaccard",
+    "hash_codes",
+    "cnnh",
+    "autoencoder",
  ]
 
  selectedEngine: string = this.engineOptions[0];
  top_n: number = 3;
  resultImages: string[] = [];
-
- // Function to select the engine for comparison
 
  constructor(
     private apiService: ApiService,
@@ -94,7 +92,7 @@ export class MainPageComponent {
     this.apiService.compareImage(this.uploadedImage as string, this.selectedEngine as string, this.top_n as number)
       .subscribe(
         (response => {
-          
+
           this.handleResponse(response);
         }),
         (error => {
