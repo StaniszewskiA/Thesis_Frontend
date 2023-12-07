@@ -14,7 +14,6 @@ export class MainPageComponent {
     "vgg16tf",
     "vgg16torch",
     "jaccard",
-    "hash_codes",
     "cnnh",
     "autoencoder",
  ]
