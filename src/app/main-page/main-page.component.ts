@@ -13,13 +13,12 @@ export class MainPageComponent {
  engineOptions: string[] = [
     "vgg16tf",
     "vgg16torch",
-    "jaccard",
     "cnnh",
     "autoencoder",
  ]
 
  selectedEngine: string = this.engineOptions[0];
- top_n: number = 3;
+ top_n: number = 5;
  resultImages: string[] = [];
 
  constructor(

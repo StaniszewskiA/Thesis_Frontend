@@ -35,8 +35,7 @@ export class ApiService {
     }).pipe (
       map((response) => {
         if (response.status === 200) {
-          console.log("Success");
-          console.log(response.body)
+
           return response.body;
         } else {
           throw new Error('Request failes with status: ${response.status}');
