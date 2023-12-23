@@ -16,7 +16,7 @@ export class MainPageComponent {
  ]
 
  selectedEngine: string = this.engineOptions[0];
- top_n: number = 5;
+ topN: number = 3;
  resultImages: string[] = [];
 
  constructor(
@@ -71,7 +71,6 @@ export class MainPageComponent {
     });
  }
 
- // Function to handle image upload
  handleImageUpload(file: File, index: number): void {
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -85,10 +84,9 @@ export class MainPageComponent {
 
  compareImages(): void {
   if (this.uploadedImage) {
-    this.apiService.compareImage(this.uploadedImage as string, this.selectedEngine as string, this.top_n as number)
+    this.apiService.compareImage(this.uploadedImage as string, this.selectedEngine as string, this.topN as number)
       .subscribe(
         (response => {
-
           this.handleResponse(response);
         }),
         (error => {
