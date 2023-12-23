@@ -36,8 +36,8 @@ export class ImageCarouselComponent implements OnInit {
     this.printImages();
 
     this.slides = [
-      { src: "../../assets/imgs/sddefault.jpg", title: 'Angular', subtitle: 'A TypeScript-based web application framework' },
-      { src: "../../assets/imgs/dummy-image.jpg", title: 'React', subtitle: 'A JavaScript library for building user interfaces' },
+      { src: "../../assets/imgs/bowie1.jpg", title: 'Angular', subtitle: 'A TypeScript-based web application framework' },
+      { src: "../../assets/imgs/bowie2.jpg", title: 'React', subtitle: 'A JavaScript library for building user interfaces' },
       { src: "../../assets/imgs/sddefault.jpg", title: 'Vue', subtitle: 'A progressive JavaScript framework for building user interfaces' }
     ];
     this.slides = [...this.slides];

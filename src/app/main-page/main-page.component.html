@@ -1,9 +1,8 @@
 <div class="main-container">
-  <h1>Thesis.py</h1>
+  <h1>Thesis.py Test</h1>
  
   <div class="dropzone-container">
      <div class="dropzone" id="dropzone1">
-       <p>Drop an image here to upload.</p>
        <img *ngIf="uploadedImage" [src]="uploadedImage" class="uploaded-image">
      </div>
   </div>
@@ -17,10 +16,5 @@
     </div>
   </div>
  
- 
-  <div class="display-container" *ngFor="let imageUrl of resultImages; let i = index">
-     <img [src]="imageUrl" [alt]="'Result image ' + (i + i)" class="result-image">
-  </div>
-
   <app-image-carousel [resultImages]="resultImages"></app-image-carousel>
  </div>

@@ -11,8 +11,6 @@ import { ImageCarouselComponent } from './../image-carousel/image-carousel.compo
 export class MainPageComponent {
  uploadedImage: string | ArrayBuffer | null = null;
  engineOptions: string[] = [
-    "vgg16tf",
-    "vgg16torch",
     "cnnh",
     "autoencoder",
  ]
